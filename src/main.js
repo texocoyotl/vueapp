@@ -15,6 +15,9 @@ Vue.use(VueAxios, axios);
 import VeeValidate from 'vee-validate';
 Vue.use(VeeValidate);
 
+var longpress = require('vue-long-press-directive')
+Vue.use(longpress, { duration: 1000 })
+
 import CreateItem from './components/CreateItem.vue';
 import DisplayItem from './components/DisplayItem.vue';
 import EditItem from './components/EditItem.vue';
