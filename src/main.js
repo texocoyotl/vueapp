@@ -21,16 +21,17 @@ Vue.use(longpress, { duration: 1000 })
 import CreateItem from './components/CreateItem.vue';
 import DisplayItem from './components/DisplayItem.vue';
 import EditItem from './components/EditItem.vue';
+import Ratings from './components/Ratings.vue';
 
 const routes = [
   {
-        name: 'CreateItem',
-        path: '/create/item',
-        component: CreateItem
+        name: 'Ratings',
+        path: '/',
+        component: Ratings
     },
   {
           name: 'DisplayItem',
-          path: '/',
+          path: '/asdf',
           component: DisplayItem
       },
       {
