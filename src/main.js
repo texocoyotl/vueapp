@@ -19,7 +19,7 @@ var longpress = require('vue-long-press-directive')
 Vue.use(longpress, { duration: 1000 })
 
 import CreateItem from './components/CreateItem.vue';
-import Catalogs from './components/Catalogs.vue';
+import Orders from './components/Orders.vue';
 import EditItem from './components/EditItem.vue';
 import Ratings from './components/Ratings.vue';
 
@@ -30,9 +30,9 @@ const routes = [
         component: Ratings
     },
   {
-          name: 'Catalogs',
+          name: 'Orders',
           path: '/',
-          component: Catalogs
+          component: Orders
       },
       {
             name: 'EditItem',
