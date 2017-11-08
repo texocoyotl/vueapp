@@ -155,9 +155,10 @@ module.exports = {
         list.forEach(function(ratedUser){
           self.ratings.forEach(function(rating){
             if (rating.user_rating == ratedUser._id){
+              ratingObj = {'ratedBy': rating.user_origin, 'rating': rating.rating}
               if (ratedUser.ratings){
-                ratedUser.ratings.push(rating.rating);
-              } else ratedUser.ratings = [rating.rating];
+                ratedUser.ratings.push(ratingObj);
+              } else ratedUser.ratings = [ratingObj];
             }
           });
         });
