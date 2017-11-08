@@ -18,9 +18,8 @@ Vue.use(VeeValidate);
 var longpress = require('vue-long-press-directive')
 Vue.use(longpress, { duration: 1000 })
 
-import CreateItem from './components/CreateItem.vue';
 import Orders from './components/Orders.vue';
-import EditItem from './components/EditItem.vue';
+import Dashboard from './components/Dashboard.vue';
 import Ratings from './components/Ratings.vue';
 
 const routes = [
@@ -35,9 +34,9 @@ const routes = [
           component: Orders
       },
       {
-            name: 'EditItem',
-            path: '/edit/:id',
-            component: EditItem
+            name: 'Dashboard',
+            path: '/dashboard',
+            component: Dashboard
         }
 ];
 
