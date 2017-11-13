@@ -15,8 +15,9 @@ Vue.use(VueAxios, axios);
 import VeeValidate from 'vee-validate';
 Vue.use(VeeValidate);
 
-var longpress = require('vue-long-press-directive')
-Vue.use(longpress, { duration: 1000 })
+require('chart.js');
+require('hchs-vue-charts');
+Vue.use(VueCharts);
 
 import Orders from './components/Orders.vue';
 import Dashboard from './components/Dashboard.vue';

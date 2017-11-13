@@ -3,7 +3,6 @@
       <v-container fluid>
     <v-layout row wrap>
        <v-flex xs3>{{ selectedList }} {{isRated}} {{ filteredType }} 
-         <br/>{{ ratings }}
       </v-flex>
       <v-flex xs9>
       <v-subheader>Filters:</v-subheader>
@@ -112,12 +111,9 @@ module.exports = {
               var list = this.ratings;
               var filteredType = this.filteredType;
               var isRated = this.isRated;
-            
-            console.log(isRated);
               
               if (isRated){
                 list = list.filter(function(r){
-                  console.log(r.rating);
                   return r.rating > 0;
                 });
               }
@@ -132,9 +128,15 @@ module.exports = {
           }
           
         },
+  
+        watch:{
+          filteredRatings: function(val){
+            console.log('filtered');
+          }
+        },
 
         created: function(){
-            
+
         },
 
         methods: {
