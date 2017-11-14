@@ -19,9 +19,16 @@ require('chart.js');
 require('hchs-vue-charts');
 Vue.use(VueCharts);
 
+import VueHighcharts from 'vue-highcharts';
+Vue.use(VueHighcharts);
+
+import ECharts from 'vue-echarts/components/ECharts.vue'
+Vue.use(ECharts);
+
 import Orders from './components/Orders.vue';
 import Dashboard from './components/Dashboard.vue';
 import Ratings from './components/Ratings.vue';
+import ProductChart from './components/ProductChart.vue';
 
 const routes = [
   {
@@ -38,6 +45,11 @@ const routes = [
             name: 'Dashboard',
             path: '/dashboard',
             component: Dashboard
+        },
+    {
+            name: 'ProductChart',
+            path: '/chart',
+            component: ProductChart
         }
 ];
 

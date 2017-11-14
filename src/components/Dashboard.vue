@@ -3,20 +3,7 @@
       <v-flex d-flex xs12>
         <v-layout column>
 
-          <pre>{{ membersChartData }}</pre>
-          
-          <canvas id="mycanvas" count="1"></canvas>
-
-          
-          <chartjs-radar 
-                         target="mycanvas" :datalabel="'Products Coverage'" :labels="productsChartLabels" :data="productsChartData" :backgroundcolor="'rgba(75,192,192,0.1)'" :bordercolor="'#00c853'"></chartjs-radar>
-          
-          <canvas id="membersChart" :count="membersChartSets.length"></canvas>
-
-          
-          <chartjs-radar v-for="i in membersChartSets.length" :key="i"
-                         target="membersChart" :datalabel="membersChartSets[i-1]" :labels="membersChartLabels[i-1]" 
-                         :data="membersChartData[i-1]" :backgroundcolor="'rgba(75,192,192,0.1)'" :bordercolor="'#00c853'"></chartjs-radar>
+          <chart style="width: auto" :options="membersChartOptions" auto-resize></chart>
           
         </v-layout>
       </v-flex>
@@ -25,8 +12,17 @@
 
 <script>
 var util = require('util');
+import ECharts from 'vue-echarts/components/ECharts.vue'
+import 'echarts/lib/chart/radar'
+import 'echarts/lib/chart/bar'
+import 'echarts/lib/component/tooltip'
+import 'echarts/lib/component/legend'
+import 'echarts/lib/component/title'
   
-module.exports = {
+export default {
+    components: {
+      chart: ECharts
+    },
     data: function(){
         return{
             team:{
@@ -135,7 +131,7 @@ module.exports = {
                 _id: 'r7',
                 user_origin: 'u2',
                 user_rating: 'u6',
-                rating: 0
+                rating: 4
               },
               {
                 _id: 'r8',
@@ -153,7 +149,7 @@ module.exports = {
                 _id: 'r10',
                 user_origin: 'u2',
                 user_rating: 'u9',
-                rating: 0
+                rating: 4
               }
               
             ]
@@ -287,12 +283,12 @@ module.exports = {
                   rating = ratingsHash[userInfo.product];
                   rating.ratings.push(ratedUser.rating);
                   rating.sumRating += ratedUser.rating;
-                  rating.avgRating = rating.sumRating / rating.ratings.length;
+                  rating.avgRating = rating.sumRating * 25/ rating.ratings.length;
                 } else {
                   rating.product = userInfo.product;
                   rating.ratings = [ratedUser.rating];
                   rating.sumRating = ratedUser.rating;
-                  rating.avgRating = ratedUser.rating;
+                  rating.avgRating = ratedUser.rating * 25;
                   ratingsHash[userInfo.product] = rating;
                 }
                 
@@ -338,22 +334,87 @@ module.exports = {
         return data;
       },
 
-      membersChartLabels: function(){
+      membersChartIndicators: function(){
         var self = this;
+        var hash = {};
         var data = [];
         
         self.ratingsByMember.forEach(function(member){
-          var subdata = [];
-          
           member.ratings.forEach(function(rating){
-            subdata.push(rating.product);
+            if (!hash[rating.product])
+              hash[rating.product] = true;
           });
-  
-          data.push(subdata);
-          
         });
+        
+        Object.keys(hash).forEach(function(key){
+            data.push({
+              name: key,
+              max: 100
+            
+          });
+        });
+
         return data;
-      }
+      },
+      
+      membersChartOptions: function(){
+        var self = this;
+        return {
+            title: {
+                text: 'Members'
+            },
+            tooltip: {},
+            legend: {
+                bottom: -5,
+              padding: 5,
+                data: self.membersChartSets
+            },
+            radar: {
+                shape: 'circle',
+                radius: '60%',
+                name: {
+                    textStyle: {
+                        color: '#fff',
+                        backgroundColor: '#999',
+                        borderRadius: 3,
+                        padding: [3, 5]
+                   }
+                },
+                indicator: self.membersChartIndicators,
+                axisLabel: {show: true}
+            },
+            series: [{
+                type: 'radar',
+                areaStyle: {normal: {opacity: 0.5}},
+              itemStyle: {
+                normal: {
+                    color: '#F9713C'
+                }
+            },
+                data : [
+                    {
+                        value : self.membersChartData[0],
+                        name : self.membersChartSets[0]
+                    }
+                ]
+            }, {
+                type: 'radar',
+                areaStyle: {normal: {opacity: 0.5}},
+              itemStyle: {
+                normal: {
+                    color: '#00FF00'
+                }
+            },
+                data : [
+                    
+                     {
+                        value : self.membersChartData[1],
+                        name : self.membersChartSets[1]
+                    }
+                ]
+            }]
+        }
+      },
       
       
 
